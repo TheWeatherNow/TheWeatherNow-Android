@@ -28,7 +28,7 @@
         android:id="@+id/main_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="온도"
+        android:text="온도 "
         android:textSize="45dp"
         android:textColor="@color/main_text"
         android:layout_centerHorizontal="true"
