@@ -1,16 +1,18 @@
 package com.example.theweathernow.view
 
 import android.os.AsyncTask
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import com.example.theweathernow.R
+import androidx.appcompat.app.AppCompatActivity
+import com.airbnb.lottie.LottieAnimationView
 import com.example.theweathernow.databinding.ActivityMainBinding
 import org.json.JSONObject
-import java.lang.Exception
+import java.io.InputStream
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+
 
         weatherTask().execute()
 
@@ -56,12 +59,15 @@ class MainActivity : AppCompatActivity() {
                 val sys = jsonObj.getJSONObject("sys")
                 val weather = jsonObj.getJSONArray("weather").getJSONObject(0)
                 val updateAt:Long = jsonObj.getLong("dt")
+                val weatherImg = weather.getString("main")
                 val updatedAtText = "Updated at: "+ SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.KOREA).format(
                     Date(updateAt*1000)
+
                 )
                 val temp = main.getString("temp")+"ºC"
                 val weatherDescription = weather.getString("description")
                 val address = jsonObj.getString("name")+", "+sys.getString("country")
+
 
                 mBinding.mainLocal.text = address
                 mBinding.updatedAt.text = updatedAtText
@@ -71,11 +77,31 @@ class MainActivity : AppCompatActivity() {
                 mBinding.loader.visibility = View.GONE
                 mBinding.mainContainer.visibility = View.VISIBLE
 
-//                when (mBinding.mainAnnouncement.toString()) {
-//                    "Rain" -> mBinding.mainWeatherImg.setAnimation()
-//                    "Clear" -> mBinding.mainWeatherImg.setAnimation()
-//                    "Clouds" -> mBinding.mainWeatherImg.setAnimation()
-//                }
+//                val dt = Date()
+//                val full_sdf = SimpleDateFormat("yyyy-MM-dd, hh:mm:ss a", Locale.KOREA)
+                val now = System.currentTimeMillis()
+                val sdf = SimpleDateFormat("kk", Locale.KOREA).format(now)
+                Log.d("TAG1111", weatherImg.toString())
+
+                        when (weatherImg.toString()) {
+                            "Rain" -> if (sdf.toInt() < 13) {
+                                mBinding.mainLottieAnimation.setAnimation(assets.open("Weather-rainy.json"))
+                            }else {
+                                mBinding.mainLottieAnimation.setAnimation(assets.open("Weather-rainy(night).json"))
+                            }
+                            "Clear" ->  if (sdf.toInt() < 13) {
+                                mBinding.mainLottieAnimation.setAnimation(assets.open("Weather-sunny.json"))
+                            }else {
+                                mBinding.mainLottieAnimation.setAnimation(assets.open("Weather-night.json"))
+                            }
+                            "Clouds"  -> if (sdf.toInt() < 13) {
+                                mBinding.mainLottieAnimation.setAnimation(assets.open("Weather-cloudy.json"))
+                            }else {
+                                mBinding.mainLottieAnimation.setAnimation(assets.open("Weather-cloudy(night).json"))
+                            }
+                        }
+                mBinding.mainLottieAnimation.loop(true)
+                mBinding.mainLottieAnimation.playAnimation()
 
 
             }
@@ -85,4 +111,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+}
+
+
+private fun LottieAnimationView.setAnimation(open: InputStream) {
 }

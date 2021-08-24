@@ -31,10 +31,10 @@
 
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/main_WeatherImg"
+            android:id="@+id/main_lottie_animation"
             android:layout_width="250dp"
             android:layout_height="250dp"
-            app:lottie_fileName="Weather-rainy(night).json"
+            app:lottie_fileName="Weather-sunny.json"
 
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
