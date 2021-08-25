@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         weatherTask().execute()
 
+
     }
 
     inner class weatherTask() : AsyncTask<String, Void, String>() {
@@ -82,19 +83,20 @@ class MainActivity : AppCompatActivity() {
                 val now = System.currentTimeMillis()
                 val sdf = SimpleDateFormat("kk", Locale.KOREA).format(now)
                 Log.d("TAG1111", weatherImg.toString())
-
+                Log.d("TAG1111",sdf.toString())
                         when (weatherImg.toString()) {
-                            "Rain" -> if (sdf.toInt() < 13) {
+                            "Rain" -> if (sdf.toInt() < 19 && sdf.toInt() > 5) {
                                 mBinding.mainLottieAnimation.setAnimation(assets.open("Weather-rainy.json"))
                             }else {
                                 mBinding.mainLottieAnimation.setAnimation(assets.open("Weather-rainy(night).json"))
                             }
-                            "Clear" ->  if (sdf.toInt() < 13) {
+                            "Clear" ->  if (sdf.toInt() < 19 && sdf.toInt() > 5) {
+                                Log.d("TAG1111","Clear morning")
                                 mBinding.mainLottieAnimation.setAnimation(assets.open("Weather-sunny.json"))
                             }else {
                                 mBinding.mainLottieAnimation.setAnimation(assets.open("Weather-night.json"))
                             }
-                            "Clouds"  -> if (sdf.toInt() < 13) {
+                            "Clouds"  -> if (sdf.toInt() < 19 && sdf.toInt() > 5) {
                                 mBinding.mainLottieAnimation.setAnimation(assets.open("Weather-cloudy.json"))
                             }else {
                                 mBinding.mainLottieAnimation.setAnimation(assets.open("Weather-cloudy(night).json"))
