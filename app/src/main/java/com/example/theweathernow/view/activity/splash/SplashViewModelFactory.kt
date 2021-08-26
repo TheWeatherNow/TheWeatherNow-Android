@@ -1,4 +1,4 @@
-package com.example.theweathernow.view.splash
+package com.example.theweathernow.view.activity.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

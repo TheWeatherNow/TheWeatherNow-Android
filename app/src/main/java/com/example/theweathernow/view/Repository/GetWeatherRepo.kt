@@ -12,13 +12,10 @@ class GetWeatherRepo(
     private val units: String
 ) :
     BaseRepository() {
-    //get latest news using safe api call
     suspend fun getWeather(): GetWeather? {
         return safeApiCall(
-            //await the result of deferred type
             call = { apiInterface.getWeather(lat, lon,appid,lang,units).await() },
-            error = "Error fetching news" //convert to mutable list
+            error = "Error fetching news"
         )
     }
 }
-
