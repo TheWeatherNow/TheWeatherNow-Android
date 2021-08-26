@@ -1,4 +1,4 @@
-package com.example.theweathernow.model
+package com.example.theweathernow.model.retrofit
 
 import com.example.theweathernow.utils.Retrofit.BASE_URL
 import com.google.gson.GsonBuilder
